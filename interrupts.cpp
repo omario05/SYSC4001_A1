@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
     /******************ADD YOUR VARIABLES HERE*************************/
     int x = 3;
     std::cout << x;
+    std::cout << "thanks for helping";
 
 
     /******************************************************************/
