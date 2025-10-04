@@ -19,7 +19,8 @@ int main(int argc, char** argv) {
     std::string execution;  //!< string to accumulate the execution output
 
     /******************ADD YOUR VARIABLES HERE*************************/
-
+    int x = 3;
+    std::cout << x;
 
 
     /******************************************************************/
