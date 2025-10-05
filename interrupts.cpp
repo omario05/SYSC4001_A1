@@ -50,18 +50,14 @@ int main(int argc, char** argv) {
             auto [interrupt_seq, updated_time]=intr_boilerplate(current_time, device_num, context_save_time, vectors);
             execution+=interrupt_seq;
             current_time=updated_time;
-            for (int i = 0; i < 3, i++){
+            for (int i = 0; i < 3; i++){
                 execution += std::to_string(current_time) + ", 40, ISR Body\n";
                 current_time += 40;
             }
             execution += std::to_string(current_time) + ", 1, IRET\n";
             current_time += 1;    
         }
-
-
-        
         /************************************************************************/
-
     }
     input_file.close();
     write_output(execution);
