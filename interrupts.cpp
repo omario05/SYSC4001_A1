@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     std::string execution;  //!< string to accumulate the execution output
 
     /******************ADD YOUR VARIABLES HERE*************************/
-    long current_time = 0;
+    long total_cpu_time = 0;
     int context_save_time = 10;
     /******************************************************************/
 
@@ -30,32 +30,34 @@ int main(int argc, char** argv) {
 
         /******************ADD YOUR SIMULATION CODE HERE*************************/
         if (activity=="CPU"){
-            execution+=std::to_string(current_time)+", "+std::to_string(duration_intr)+", CPU Burst\n";
-            current_time+=duration_intr;
-        }
-        else if (activity=="SYSCALL"){
+            execution+=std::to_string(total_cpu_time)+", "+std::to_string(duration_intr)+", CPU Burst\n";
+            total_cpu_time+=duration_intr;
+        } else if (activity=="SYSCALL"){
             int device_num=duration_intr;
-            auto [interrupt_seq, updated_time]=intr_boilerplate(current_time, device_num, context_save_time, vectors);
+            auto [interrupt_seq, updated_time]=intr_boilerplate(total_cpu_time, device_num, context_save_time, vectors);
             execution+=interrupt_seq;
-            current_time=updated_time;
-            for (int i = 0; i < 3; i++){
-                execution += std::to_string(current_time) + ", 40, ISR Body\n";
-                current_time += 40;
-            }
-            execution += std::to_string(current_time) + ", 1, IRET\n";
-            current_time += 1;
-        }
-        else if (activity=="END_IO"){
+            total_cpu_time=updated_time;
+            execution+=std::to_string(total_cpu_time)+", 40, SYSCALL: run the ISR (device driver)\n";
+            total_cpu_time+=40;
+            execution+=std::to_string(total_cpu_time)+", 40, transfer data from device to memory\n";
+            total_cpu_time+=40;
+            execution+=std::to_string(total_cpu_time)+", 40, check for errors\n";
+            total_cpu_time+=40;
+            execution+=std::to_string(total_cpu_time)+", 1, IRET\n";
+            total_cpu_time+=1;
+        } else if (activity=="END_IO"){
             int device_num=duration_intr;
-            auto [interrupt_seq, updated_time]=intr_boilerplate(current_time, device_num, context_save_time, vectors);
+            auto [interrupt_seq, updated_time]=intr_boilerplate(total_cpu_time, device_num, context_save_time, vectors);
             execution+=interrupt_seq;
-            current_time=updated_time;
-            for (int i = 0; i < 3; i++){
-                execution += std::to_string(current_time) + ", 40, ISR Body\n";
-                current_time += 40;
-            }
-            execution += std::to_string(current_time) + ", 1, IRET\n";
-            current_time += 1;    
+            total_cpu_time=updated_time;
+            execution+=std::to_string(total_cpu_time)+", 40, END_IO: run the ISR (device driver)\n";
+            total_cpu_time+=40;
+            execution+=std::to_string(total_cpu_time)+", 40, transfer data from device to memory\n";
+            total_cpu_time+=40;
+            execution+=std::to_string(total_cpu_time)+", 40, check for errors\n";
+            total_cpu_time+=40;
+            execution+= std::to_string(total_cpu_time)+", 1, IRET\n";
+            total_cpu_time += 1;    
         }
         /************************************************************************/
     }
