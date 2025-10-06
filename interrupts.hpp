@@ -31,7 +31,7 @@
 std::tuple<std::vector<std::string>, std::vector<int>> parse_args(int argc, char** argv) {
     if(argc != 4) {
         std::cout << "ERROR!\nExpected 3 argument, received " << argc - 1 << std::endl;
-        std::cout << "To run the program, do: ./interrutps <your_trace_file.txt> <your_vector_table.txt> <your_device_table.txt>" << std::endl;
+        std::cout << "To run the program, do: ./interrupts <your_trace_file.txt> <your_vector_table.txt> <your_device_table.txt>" << std::endl;
         exit(1);
     }
 
