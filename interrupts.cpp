@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
     /******************ADD YOUR VARIABLES HERE*************************/
     long total_cpu_time = 0;
     int context_save_time = 10;
+    int ISR_ACTIVITY = 40;
     /******************************************************************/
 
     //parse each line of the input trace file
@@ -38,11 +39,11 @@ int main(int argc, char** argv) {
             execution+=interrupt_seq;
             total_cpu_time=updated_time;
             execution+=std::to_string(total_cpu_time)+", 40, SYSCALL: run the ISR (device driver)\n";
-            total_cpu_time+=40;
+            total_cpu_time+=ISR_ACTIVITY;
             execution+=std::to_string(total_cpu_time)+", 40, transfer data from device to memory\n";
-            total_cpu_time+=40;
+            total_cpu_time+=ISR_ACTIVITY;
             execution+=std::to_string(total_cpu_time)+", 40, check for errors\n";
-            total_cpu_time+=40;
+            total_cpu_time+=ISR_ACTIVITY;
             execution+=std::to_string(total_cpu_time)+", 1, IRET\n";
             total_cpu_time+=1;
         } else if (activity=="END_IO"){
@@ -51,11 +52,11 @@ int main(int argc, char** argv) {
             execution+=interrupt_seq;
             total_cpu_time=updated_time;
             execution+=std::to_string(total_cpu_time)+", 40, END_IO: run the ISR (device driver)\n";
-            total_cpu_time+=40;
+            total_cpu_time+=ISR_ACTIVITY;
             execution+=std::to_string(total_cpu_time)+", 40, transfer data from device to memory\n";
-            total_cpu_time+=40;
+            total_cpu_time+=ISR_ACTIVITY;
             execution+=std::to_string(total_cpu_time)+", 40, check for errors\n";
-            total_cpu_time+=40;
+            total_cpu_time+=ISR_ACTIVITY;
             execution+= std::to_string(total_cpu_time)+", 1, IRET\n";
             total_cpu_time += 1;    
         }
